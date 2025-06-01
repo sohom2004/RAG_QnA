@@ -50,9 +50,9 @@ def main():
     print("Enter your question (type 'exit' to quit):\n")
     
     while True:
-        query_string = input("👉 Your query: ")
+        query_string = input("Your query: ")
         if query_string.strip().lower() in ['exit', 'quit', 'q']:
-            print("\n👋 Exiting. See you next time!")
+            print("\nExiting. See you next time!")
             break
         result = query_per_document(db, query_string)
         print("\n=== Query Result ===\n")

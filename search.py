@@ -37,9 +37,8 @@ def query_per_document(db, query_string, k=3):
     return formatted_response
 
 def main():
-    parser = argparse.ArgumentParser(description="Enter your query.")
-    parser.add_argument("query", type=str, help="The question you want to ask.")
-    parser.add_argument("--persist_directory", type=str, default="./chroma", help="Path to chroma persist directory.")
+    parser = argparse.ArgumentParser(description="Interactive QA terminal using Chroma + Gemini.")
+    parser.add_argument("--persist_directory", type=str, default="./chroma", help="Path to Chroma persist directory.")
     args = parser.parse_args()
     
     global llm
@@ -48,9 +47,17 @@ def main():
 
     db = Chroma(persist_directory=args.persist_directory, embedding_function=embedding_function)
     
-    result = query_per_document(db, args.query)
-    print("\n=== Query Result ===\n")
-    print(result)
+    print("Enter your question (type 'exit' to quit):\n")
+    
+    while True:
+        query_string = input("👉 Your query: ")
+        if query_string.strip().lower() in ['exit', 'quit', 'q']:
+            print("\n👋 Exiting. See you next time!")
+            break
+        result = query_per_document(db, query_string)
+        print("\n=== Query Result ===\n")
+        print(result)
+        print("\n====================\n")
     
 if __name__ == "__main__":
     main()
